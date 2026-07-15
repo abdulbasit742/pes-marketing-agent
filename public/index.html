@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PES Marketing Draft Studio</title>
+  <meta name="description" content="Authenticated, review-first marketing draft workspace for PES.">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+  <header><div><strong>PES Marketing Draft Studio</strong><span>Draft-only • no publishing or sending</span></div><button id="logout" hidden>Sign out</button></header>
+  <main id="main" tabindex="-1">
+    <section id="login-view" class="panel narrow">
+      <p class="eyebrow">Operator access</p><h1>Sign in to prepare marketing drafts.</h1>
+      <p>The operator token stays in this form submission and is exchanged for an HttpOnly session cookie. It is never saved in browser storage.</p>
+      <form id="login-form"><label for="token">Operator token</label><input id="token" name="token" type="password" autocomplete="current-password" minlength="24" required><button>Sign in</button></form>
+      <p id="login-error" class="error" role="alert"></p>
+    </section>
+
+    <section id="workspace" hidden>
+      <div class="intro"><div><p class="eyebrow">Human-controlled workflow</p><h1>Create a draft, verify it, then use an authorized tool yourself.</h1></div><p id="status" class="status">Checking provider…</p></div>
+      <div class="grid">
+        <form id="draft-form" class="panel">
+          <label for="mode">Draft type</label><select id="mode" required><option value="general">General strategy</option><option value="social">Social media</option><option value="email">Email campaign</option><option value="content">Content strategy</option><option value="ads">Advertising copy</option><option value="analysis">Market analysis</option><option value="ideas">Campaign ideas</option></select>
+          <label for="audience">Audience</label><input id="audience" maxlength="500" required placeholder="Example: PIEAS students interested in entrepreneurship">
+          <label for="objective">Objective</label><input id="objective" maxlength="500" required placeholder="Example: increase workshop registrations">
+          <label for="brief">Brief</label><textarea id="brief" rows="8" maxlength="4000" required placeholder="Describe the event, verified facts, offer, tone, and call to action."></textarea>
+          <label for="constraints">Constraints and approved facts</label><textarea id="constraints" rows="4" maxlength="1000" placeholder="Dates, approved links, wording restrictions, accessibility requirements…"></textarea>
+          <button id="generate">Generate reviewable draft</button><p id="form-error" class="error" role="alert"></p>
+        </form>
+        <section class="panel output" aria-live="polite">
+          <div class="output-head"><div><p class="eyebrow">Output</p><h2>Draft requiring human review</h2></div><span id="provider"></span></div>
+          <pre id="draft">No draft generated yet.</pre>
+          <label class="check"><input id="reviewed" type="checkbox" disabled><span>I reviewed facts, consent, brand approval, links, platform policy, and accessibility.</span></label>
+          <div class="actions"><button id="copy" disabled>Copy reviewed draft</button><button id="download" disabled>Download .txt</button></div>
+          <p class="notice">This application cannot publish posts, send email, buy ads, contact users, or measure campaign performance.</p>
+        </section>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
