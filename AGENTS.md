@@ -2,43 +2,33 @@
 
 ## Scope
 
-These instructions apply to the entire `abdulbasit742/pes-marketing-agent` repository. More specific AGENTS.md or AGENTS.override.md files in subdirectories may refine them.
+These instructions apply to the entire `abdulbasit742/pes-marketing-agent` repository.
 
-Project: **pes-marketing-agent**.
+Project: a dependency-free, authenticated, **draft-only** marketing assistant.
 
-Detected root stack: **Repository layout must be discovered before editing; no supported root build manifest was detected.**.
+## Trust boundary
 
-## Working method
+- `server.mjs`: same-origin HTTP boundary, session enforcement, body/rate limits, static assets
+- `src/auth.mjs`: signed HttpOnly operator session
+- `src/config.mjs`: fail-closed environment configuration
+- `src/policy.mjs`: mode/input/secret validation and review prompt
+- `src/provider.mjs`: fixed server-side provider call with timeout/response bounds
+- `src/service.mjs`: draft-only orchestration result
+- `public/`: untrusted browser UI; no secrets, provider endpoints, storage, or publishing actions
 
-1. Read README.md, the relevant manifests, and nearby tests before editing.
-2. Check the current diff and preserve unrelated user changes.
-3. Make the smallest coherent change that solves the task; follow existing names, patterns, and directory boundaries.
-4. Do not hand-edit generated, vendored, dependency, build-output, model-weight, or dataset files unless the task explicitly targets them.
-5. Update tests and documentation when behavior, configuration, public APIs, or setup steps change.
+## Verified commands
 
-## Commands
+```bash
+npm ci --ignore-scripts --no-audit --no-fund
+npm run check
+```
 
-- Read README.md and inspect nested directories for package.json, pyproject.toml, requirements.txt, Dockerfiles, Makefiles, or service-specific instructions.
-- Do not invent build, test, deployment, or migration commands. Record newly verified commands in README.md or a nested AGENTS.md.
+## Rules
 
-## Verification
-
-- Run the narrowest relevant test first, then the repository's available lint, type-check, test, and build commands.
-- Never report a check as passed unless it was actually run. State skipped checks and the concrete reason.
-- For UI changes, verify loading, empty, error, and success states plus keyboard access and responsive layout.
-- For API or persistence changes, verify validation, authorization, failure behavior, and backward compatibility.
-
-## Security and side effects
-
-- Never commit secrets, tokens, passwords, private keys, production data, or populated environment files. Use documented environment variables and sanitized examples.
-- Treat migrations, deployments, billing, live network calls, account changes, destructive Git operations, and external messages as side effects. Do not perform them without explicit task authorization.
-- Validate untrusted input at trust boundaries and avoid logging credentials, personal data, prompts containing secrets, or raw third-party payloads.
-- AI/model integrations: keep provider credentials server-side, validate model output before side effects, use bounded retries/timeouts, and retain a deterministic non-AI failure path.
-- Messaging/publishing: default to mocks or dry-run mode. Never send messages, publish posts, contact users, or consume paid quotas unless the task explicitly authorizes the exact target and action.
-
-## Completion checklist
-
-- The requested behavior is implemented with a focused diff.
-- Relevant automated checks pass, or any unavailable checks are clearly identified.
-- No secrets, generated artifacts, or unrelated formatting churn were introduced.
-- The final handoff summarizes changed files, verification evidence, risks, and any follow-up work.
+1. Keep provider and operator credentials server-side and out of URLs, logs, browser storage, and responses.
+2. Preserve explicit operator authentication, same-origin mutation checks, bounded fields/body/rate state, and plain-text output.
+3. Model output must remain a draft requiring human review.
+4. Do not add publishing, email delivery, scheduling, ads, contact imports, scraping, analytics claims, or external mutations without a separate reviewed authorization/consent/audit design.
+5. Keep demo mode explicit and clearly labelled; never disguise deterministic output as AI.
+6. Do not make uptime, cost, capacity, conversion, ROI, or factual marketing claims without evidence.
+7. Update tests, scanner, README, reference review, and audit whenever the trust boundary changes.
